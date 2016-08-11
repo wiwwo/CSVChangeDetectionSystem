@@ -1,0 +1,91 @@
+﻿$ ./randomData.entities.py 200KTest.20010101 200000 DONTBACKUP/ &
+[1] 17376
+
+$ ./randomData.entities.py 200KTest.20111111 200000 DONTBACKUP/ 100000 &
+[2] 16392
+
+$ wait
+[1]-  Done                    ./randomData.entities.py 200KTest.20010101 200000 DONTBACKUP/
+[2]+  Done                    ./randomData.entities.py 200KTest.20111111 200000 DONTBACKUP/ 100000
+
+$ zcat DONTBACKUP/200Ktest.20010101.csv.gz | head -4
+id:ID(entity200KTest.20010101),:LABEL,entityName,attr0,attr1
+"1","entity200KTest.20010101","Ent_1","attr0_76395125","attr1_81639887"
+"2","entity200KTest.20010101","Ent_2","attr0_49257994","attr1_13804620"
+"3","entity200KTest.20010101","Ent_3","attr0_64314779","attr1_90262149"
+
+$ zcat DONTBACKUP/200Ktest.20111111.csv.gz | head -4
+id:ID(entity200KTest.20111111),:LABEL,entityName,attr0,attr1
+"100001","entity200KTest.20111111","Ent_100001","attr0_81005773","attr1_9264977"
+"100002","entity200KTest.20111111","Ent_100002","attr0_99946253","attr1_73311915"
+"100003","entity200KTest.20111111","Ent_100003","attr0_54514142","attr1_17301677"
+
+$ zcat DONTBACKUP/200Ktest.20010101.csv.gz | tail -3
+"199998","entity200KTest.20010101","Ent_199998","attr0_36609477","attr1_28944426"
+"199999","entity200KTest.20010101","Ent_199999","attr0_91228244","attr1_53743837"
+"200000","entity200KTest.20010101","Ent_200000","attr0_70808355","attr1_98713416"
+
+$ zcat DONTBACKUP/200Ktest.20111111.csv.gz | tail -3
+"299998","entity200KTest.20111111","Ent_299998","attr0_50744962","attr1_86316680"
+"299999","entity200KTest.20111111","Ent_299999","attr0_75474134","attr1_14596012"
+"300000","entity200KTest.20111111","Ent_300000","attr0_84481498","attr1_82517388"
+
+$
+
+$ zcat DONTBACKUP/200Ktest.20010101.csv.gz | grep ^\"111111
+"111111","entity200KTest.20010101","Ent_111111","attr0_88029865","attr1_3997504"
+
+$ zcat DONTBACKUP/200Ktest.20111111.csv.gz | grep ^\"111111
+"111111","entity200KTest.20111111","Ent_111111","attr0_16702374","attr1_5453705"
+
+$
+
+$
+
+$ time ./prep.sh                            \
+>       DONTBACKUP/200Ktest.20010101.csv.gz \
+>       DONTBACKUP/200Ktest.20111111.csv.gz \
+>       > DONTBACKUP/200Ktest.diff.gz
+
+real    0m1.546s
+user    0m1.493s
+sys     0m0.152s
+
+$
+
+$ zcat DONTBACKUP/200Ktest.diff.gz  | wc -l
+400004
+
+$
+
+$ time ./postJSONv4.py                  \
+>       200Ktest                        \
+>       DONTBACKUP/200Ktest.diff.gz     \
+>       DONTBACKUP/200Ktest.header.csv  \
+>       | gzip > DONTBACKUP/200Ktest.json.gz
+
+real    0m10.496s
+user    0m14.820s
+sys     0m0.358s
+
+$
+
+$
+
+$ zcat DONTBACKUP/200Ktest.json.gz | wc -l
+650011
+
+$
+
+$ zcat DONTBACKUP/200Ktest.json.gz | grep \"111111\"
+{   "tableName" :"200Ktest"   ,"sourceTablePk": "111111"   ,"headerCsv": "ID,LABEL,ENTITYNAME,ATTR0,ATTR1"   ,"operationType": "U"   ,"oldValuesC
+sv":["111111","entity200KTest.20010101","Ent_111111","attr0_88029865","attr1_3997504"]   ,"oldValuesKv": [{"id": "111111"},{"label": "entity200KT
+est.20010101"},{"entityname": "Ent_111111"},{"attr0": "attr0_88029865"},{"attr1": "attr1_3997504"}]   ,"oldValuesJson": {"id": "111111","label":
+"entity200KTest.20010101","entityname": "Ent_111111","attr0": "attr0_88029865","attr1": "attr1_3997504"}   ,"newValuesCsv": ["111111","entity200K
+Test.20111111","Ent_111111","attr0_16702374","attr1_5453705"]   ,"newValuesKv": [{"id": "111111"},{"label": "entity200KTest.20111111"},{"entityna
+me": "Ent_111111"},{"attr0": "attr0_16702374"},{"attr1": "attr1_5453705"}]   ,"newValuesJson": {"id": "111111","label": "entity200KTest.20111111"
+,"entityname": "Ent_111111","attr0": "attr0_16702374","attr1": "attr1_5453705"}   ,"updateJsonNewVals":{"label":"entity200KTest.20111111","attr0"
+:"attr0_16702374","attr1":"attr1_5453705"}   ,"updateJsonOldNewVals": [{"label": {"is": "entity200KTest.20111111", "was": "entity200KTest.2001010
+1" }},{"attr0": {"is": "attr0_16702374", "was": "attr0_88029865" }},{"attr1": {"is": "attr1_5453705", "was": "attr1_3997504" }}]
+
+$
