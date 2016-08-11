@@ -24,10 +24,10 @@ Starting from those basic assumptions, generating deltas is pretty straight forw
 <br>
 I show here my quick and dirty solution, which should be good enough for a P.O.C.<br>
 Many files attached, let’s start from the beginning:<br>
-•	```prep.sh``` is used to do the real magic: calls the diff –u command, filters out lines without sign, and compresses output.
-No magic, no 200 lines code with 20 pages manual (those numbers swap if code is in python ), no custom code, 99.9999999999% bugs free,  one line solution, runs everywhere with no change, works out-of-the-box, no external dependencies, no compiler/interpreter, …
-Maybe the K.I.S.S.-est solution I’ve ever found :-)
-•	```postJSONv6.py``` takes the prep.sh output and elaborates it, producing a JSON row for every difference in file.
-Please note this is just a P.O.C., there are many ways of writing this code better! 
-•	```postSQLv6.py``` is the very same, but produces a SQL file. Same terms & conditions apply 
-•	```randomData.entities.py``` creates CSVs with random data.
+•	```prep.sh``` is used to do the real magic: calls the diff –u command, filters out lines without sign, and compresses output.<br>
+No magic, no 200 lines code with 20 pages manual (those numbers swap if code is in python ), no custom code, 99.9999999999% bugs free,  one line solution, runs everywhere with no change, works out-of-the-box, no external dependencies, no compiler/interpreter, …<br>
+Maybe the K.I.S.S.-est solution I’ve ever found :-)<br>
+•	```postJSONv6.py``` takes the prep.sh output and elaborates it, producing a JSON row for every difference in file.<br>
+Please note this is just a P.O.C., there are many ways of writing this code better! :-)<br>
+•	```postSQLv6.py``` is the very same, but produces a SQL file. Same terms & conditions apply :-)<br>
+•	```randomData.entities.py``` creates CSVs with random data.<br>
