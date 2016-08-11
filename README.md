@@ -4,7 +4,7 @@ The core of the solution is the bare metal diff Unix command, more specifically 
 <br>
 Basically, given two files, diff –u returns (simplified):<br>
 ```
-1,this line is the same in both files
+ 1,this line is the same in both files
 -2,this line contains AAA in old file
 +2,this line contains BBB in new file
 -3,this line is just in old file
