@@ -1,3 +1,5 @@
+#CSV Change detection system: a K.I.S.S. approach
+
 The core of the solution is the bare metal diff Unix command, more specifically the Unified diff format which was being used (between the many cases) to patch Linux Kernel source code (1996 Linux Journal article, for those who want to spend a tear on his past :-) ).<br>
 <br>
 Basically, given two files, diff –u returns (simplified):<br>
