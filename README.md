@@ -29,9 +29,9 @@ Many files attached, let’s start from the beginning:<br>
 •	```prep.sh``` is used to do the real magic: calls the diff –u command, filters out lines without sign, and compresses output.<br>
     No magic, no 200 lines code with 20 pages manual (those numbers swap if code is in python :-P), no custom code, 99.9999999999% bugs free,  one line solution, runs everywhere with no change, works out-of-the-box, no external dependencies, no compiler/interpreter, …<br>
     Maybe the K.I.S.S.-est solution I’ve ever found :-)<br>
-•	```postJSONv6.py``` takes the prep.sh output and elaborates it, producing a JSON row for every difference in file.<br>
+•	```postJSON.py``` takes the prep.sh output and elaborates it, producing a JSON row for every difference in file.<br>
     Please note this is just a P.O.C., there are many ways of writing this code better! :-)<br>
-•	```postSQLv6.py``` is the very same, but produces a SQL file. Same terms & conditions apply :-)<br>
+•	```postSQL.py``` is the very same, but produces a SQL file. Same terms & conditions apply :-)<br>
 •	```randomData.entities.py``` creates CSVs with random data.<br>
 
 Execution example:
@@ -58,13 +58,13 @@ time ./prep.sh                            \
 
 zcat DONTBACKUP/200Ktest.diff.gz  | wc -l
 
-time ./postJSONv6.py                  \
+time ./postJSON.py                  \
       200Ktest                        \
       DONTBACKUP/200Ktest.diff.gz     \
       DONTBACKUP/200Ktest.header.csv  \
       | gzip > DONTBACKUP/200Ktest.json.gz
 
-time ./postSQLv6.py                  \
+time ./postSQL.py                  \
       200Ktest                        \
       DONTBACKUP/200Ktest.diff.gz     \
       DONTBACKUP/200Ktest.header.csv  \
