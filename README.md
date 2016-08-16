@@ -33,7 +33,24 @@ Many files attached, let’s start from the beginning:<br>
     Please note this is just a P.O.C., there are many ways of writing this code better! :-)<br>
 •	```postSQL.py``` is the very same, but produces a SQL file. Same terms & conditions apply :-)<br>
 •	```randomData.entities.py``` creates CSVs with random data.<br>
-
+<br>
+A performance tests has been executed, logs below. <br>
+Source CSV files with 200.000 rows each.<br> 
+Each CSV file has 5 columns, detailed in header files (attached as well):<br>
+ID,LABEL,ENTITYNAME,ATTR0,ATTR1<br>
+<br>
+Files data are being created to reproduce the worst case scenario:<br>
+•	File1 has rows with ID from 0 to 200000<br>
+•	File2 has rows with ID from 100000 to 300000<br>
+•	IDs from 100000 to 200000 are shared, but all attributes are changed<br>
+<br>
+So, to resume, we will have<br>
+•	100k new IDs -> 100k “inserts”<br>
+•	100k changed IDs -> 100k “updates”<br>
+•	100k disappeared IDs -> 100k “deletes”<br>
+<br>
+<br>
+<br>
 Execution example:
 ```
 date
