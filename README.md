@@ -34,6 +34,7 @@ Many files attached, let’s start from the beginning:<br>
 •	```postSQL.py``` is the very same, but produces a SQL file. Same terms & conditions apply :-)<br>
 •	```randomData.entities.py``` creates CSVs with random data.<br>
 <br>
+<br>
 A performance tests has been executed, logs below. <br>
 Source CSV files with 200.000 rows each.<br> 
 Each CSV file has 5 columns, detailed in header files (attached as well):<br>
@@ -48,8 +49,6 @@ So, to resume, we will have<br>
 •	100k new IDs -> 100k “inserts”<br>
 •	100k changed IDs -> 100k “updates”<br>
 •	100k disappeared IDs -> 100k “deletes”<br>
-<br>
-<br>
 <br>
 Execution example:
 ```
