@@ -36,6 +36,8 @@ Many files attached, let’s start from the beginning:<br>
 
 Execution example:
 ```
+date
+
 mkdir DONTBACKUP/
 
 ./randomData.entities.py 200KTest.20010101 200000 DONTBACKUP/ &
@@ -77,11 +79,17 @@ zcat DONTBACKUP/200Ktest.json.gz | wc -l
 
 zcat DONTBACKUP/200Ktest.json.gz | grep \"111111\"
 
+date
+
 ```
 
 
 Execution output example:
 ```
+$ date
+Tue, Aug 16, 2016 12:05:42 PM
+
+
 $ mkdir DONTBACKUP/
 
 
@@ -192,6 +200,10 @@ $ zcat DONTBACKUP/200Ktest.json.gz | grep \"111111\"
    ,"newValuesKv": [{"id": "111111"},{"label": "entity200KTest.20111111"},{"entityname": "Ent_111111"},{"attr0": "attr0_632068"},{"attr1": "attr1_273703"}]
    ,"newValuesJson": {"id": "111111","label": "entity200KTest.20111111","entityname": "Ent_111111","attr0": "attr0_632068","attr1": "attr1_273703"}
 
+
+
+$ date
+Tue, Aug 16, 2016 12:06:03 PM
 
 ```
 
