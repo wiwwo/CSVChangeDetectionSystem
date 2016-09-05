@@ -36,7 +36,7 @@ Many files attached, let’s start from the beginning:<br>
 <br>
 <br>
 A performance tests has been executed, logs below. <br>
-Source CSV files with 200.000 rows each.<br> 
+Source CSV files with 200.000 rows each.<br>
 Each CSV file has 5 columns, detailed in header files (attached as well):<br>
 ID,LABEL,ENTITYNAME,ATTR0,ATTR1<br>
 <br>
@@ -90,6 +90,11 @@ time ./postSQL.py                  \
       DONTBACKUP/200Ktest.header.csv  \
       | gzip > DONTBACKUP/200Ktest.sql.gz
 
+time ./postpostCYPHER.py                  \
+      200Ktest                        \
+      DONTBACKUP/200Ktest.diff.gz     \
+      DONTBACKUP/200Ktest.header.csv  \
+      | gzip > DONTBACKUP/200Ktest.cy.gz
 
 zcat DONTBACKUP/200Ktest.json.gz | wc -l
 
