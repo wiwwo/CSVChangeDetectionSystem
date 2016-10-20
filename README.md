@@ -225,14 +225,102 @@ $ zcat DONTBACKUP/200Ktest.json.gz | wc -l
 
 
 
-$ zcat DONTBACKUP/200Ktest.json.gz | grep \"111111\"
-   ,"sourceTablePk": "111111"
-   ,"oldValuesCsv":["111111","entity200KTest.20010101","Ent_111111","attr0_703808","attr1_665025"]
-   ,"oldValuesKv": [{"id": "111111"},{"label": "entity200KTest.20010101"},{"entityname": "Ent_111111"},{"attr0": "attr0_703808"},{"attr1": "attr1_665025"}]
-   ,"oldValuesJson": {"id": "111111","label": "entity200KTest.20010101","entityname": "Ent_111111","attr0": "attr0_703808","attr1": "attr1_665025"}
-   ,"newValuesCsv": ["111111","entity200KTest.20111111","Ent_111111","attr0_632068","attr1_273703"]
-   ,"newValuesKv": [{"id": "111111"},{"label": "entity200KTest.20111111"},{"entityname": "Ent_111111"},{"attr0": "attr0_632068"},{"attr1": "attr1_273703"}]
-   ,"newValuesJson": {"id": "111111","label": "entity200KTest.20111111","entityname": "Ent_111111","attr0": "attr0_632068","attr1": "attr1_273703"}
+$ zcat DONTBACKUP/200Ktest.json.gz
+[cut]
+{
+  "tableName": "200Ktest",
+  "sourceTablePk": "111111",
+  "headerCsv": "ID,LABEL,ENTITYNAME,ATTR0,ATTR1",
+  "operationType": "U",
+  "oldValuesCsv": [
+    "111111",
+    "entity200KTest.20010101",
+    "Ent_111111",
+    "attr0_88029865",
+    "attr1_3997504"
+  ],
+  "oldValuesKv": [
+    {
+      "id": "111111"
+    },
+    {
+      "label": "entity200KTest.20010101"
+    },
+    {
+      "entityname": "Ent_111111"
+    },
+    {
+      "attr0": "attr0_88029865"
+    },
+    {
+      "attr1": "attr1_3997504"
+    }
+  ],
+  "oldValuesJson": {
+    "id": "111111",
+    "label": "entity200KTest.20010101",
+    "entityname": "Ent_111111",
+    "attr0": "attr0_88029865",
+    "attr1": "attr1_3997504"
+  },
+  "newValuesCsv": [
+    "111111",
+    "entity200KTest.20111111",
+    "Ent_111111",
+    "attr0_16702374",
+    "attr1_5453705"
+  ],
+  "newValuesKv": [
+    {
+      "id": "111111"
+    },
+    {
+      "label": "entity200KTest.20111111"
+    },
+    {
+      "entityname": "Ent_111111"
+    },
+    {
+      "attr0": "attr0_16702374"
+    },
+    {
+      "attr1": "attr1_5453705"
+    }
+  ],
+  "newValuesJson": {
+    "id": "111111",
+    "label": "entity200KTest.20111111",
+    "entityname": "Ent_111111",
+    "attr0": "attr0_16702374",
+    "attr1": "attr1_5453705"
+  },
+  "updateJsonNewVals": {
+    "label": "entity200KTest.20111111",
+    "attr0": "attr0_16702374",
+    "attr1": "attr1_5453705"
+  },
+  "updateJsonOldNewVals": [
+    {
+      "label": {
+        "is": "entity200KTest.20111111",
+        "was": "entity200KTest.20010101"
+      }
+    },
+    {
+      "attr0": {
+        "is": "attr0_16702374",
+        "was": "attr0_88029865"
+      }
+    },
+    {
+      "attr1": {
+        "is": "attr1_5453705",
+        "was": "attr1_3997504"
+      }
+    }
+  ]
+}
+[cut]
 
 
 
