@@ -207,6 +207,17 @@ sys     0m0.217s
 
 
 
+
+$ time ./postCYPHER.py                  \
+>       200Ktest                        \
+>       DONTBACKUP/200Ktest.diff.gz     \
+>       DONTBACKUP/200Ktest.header.csv  \
+>       | gzip > DONTBACKUP/200Ktest.sql.gz
+
+real    0m4.131s
+user    0m3.790s
+sys     0m0.248s
+
 $
 
 $ zcat DONTBACKUP/200Ktest.json.gz | wc -l
@@ -222,6 +233,32 @@ $ zcat DONTBACKUP/200Ktest.json.gz | grep \"111111\"
    ,"newValuesCsv": ["111111","entity200KTest.20111111","Ent_111111","attr0_632068","attr1_273703"]
    ,"newValuesKv": [{"id": "111111"},{"label": "entity200KTest.20111111"},{"entityname": "Ent_111111"},{"attr0": "attr0_632068"},{"attr1": "attr1_273703"}]
    ,"newValuesJson": {"id": "111111","label": "entity200KTest.20111111","entityname": "Ent_111111","attr0": "attr0_632068","attr1": "attr1_273703"}
+
+
+
+
+$ zcat DONTBACKUP/200Ktest.cy.gz
+[cut]
+-- OLD VALUES= "111111","entity200KTest.20010101","Ent_111111","attr0_88029865","attr1_3997504"
+-- NEW VALUES= "111111","entity200KTest.20111111","Ent_111111","attr0_16702374","attr1_5453705"
+MATCH (x:200Ktest {id: '"111111"'} )
+ SET
+   LABEL: 'entity200KTest.20111111',
+   ATTR0: 'attr0_16702374',
+   ATTR1: 'attr1_5453705',
+ WHERE ID="111111";
+[cut]
+
+
+$ zcat DONTBACKUP/200Ktest.sql.gz
+[cut]
+-- OLD VALUES= "111111","entity200KTest.20010101","Ent_111111","attr0_88029865","attr1_3997504"
+-- NEW VALUES= "111111","entity200KTest.20111111","Ent_111111","attr0_16702374","attr1_5453705"
+UPDATE 200Ktest SET
+ label = "entity200KTest.20111111", attr0 = "attr0_16702374", attr1 = "attr1_5453705"
+ WHERE ID="111111";
+[cut]
+
 
 
 
