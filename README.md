@@ -1,4 +1,6 @@
-#CSV Change detection system: a K.I.S.S. approach
+# CSV Change detection system: a K.I.S.S. approach
+
+The objective is to provide a simple and fast delta provider: the final objective is to show difference between different version of date, being them in different time (changes between yesterday and today) or between different machines.
 
 The core of the solution is the bare metal diff Unix command, more specifically the Unified diff format which was being used (between the many cases) to patch Linux Kernel source code (1996 Linux Journal article, for those who want to spend a tear on his past :-) ).<br>
 <br>
