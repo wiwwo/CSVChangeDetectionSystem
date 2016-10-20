@@ -57,20 +57,102 @@ $ zcat DONTBACKUP/200Ktest.diff.gz  | wc -l
 400004
 
 $
+$ date
+Tue, Aug 16, 2016 12:05:42 PM
 
-$ time ./postJSONv4.py                  \
+
+$ mkdir DONTBACKUP/
+
+
+
+$ ./randomData.entities.py 200KTest.20010101 200000 DONTBACKUP/ &
+[1] 1204
+
+$ ./randomData.entities.py 200KTest.20111111 200000 DONTBACKUP/ 100000 &
+[2] 9740
+
+$ wait
+[1]-  Done                    ./randomData.entities.py 200KTest.20010101 200000 DONTBACKUP/
+[2]+  Done                    ./randomData.entities.py 200KTest.20111111 200000 DONTBACKUP/ 100000
+
+
+
+$ zcat DONTBACKUP/200Ktest.20010101.csv.gz | head -4
+id:ID(entity200KTest.20010101),:LABEL,entityName,attr0,attr1
+"1","entity200KTest.20010101","Ent_1","attr0_527593","attr1_392675"
+"2","entity200KTest.20010101","Ent_2","attr0_268000","attr1_20936"
+"3","entity200KTest.20010101","Ent_3","attr0_912182","attr1_618131"
+
+$ zcat DONTBACKUP/200Ktest.20111111.csv.gz | head -4
+id:ID(entity200KTest.20111111),:LABEL,entityName,attr0,attr1
+"100001","entity200KTest.20111111","Ent_100001","attr0_46062","attr1_466131"
+"100002","entity200KTest.20111111","Ent_100002","attr0_226397","attr1_925353"
+"100003","entity200KTest.20111111","Ent_100003","attr0_331961","attr1_362192"
+
+$ zcat DONTBACKUP/200Ktest.20010101.csv.gz | tail -3
+"199998","entity200KTest.20010101","Ent_199998","attr0_747332","attr1_56769"
+"199999","entity200KTest.20010101","Ent_199999","attr0_693643","attr1_4989"
+"200000","entity200KTest.20010101","Ent_200000","attr0_708617","attr1_734619"
+
+$ zcat DONTBACKUP/200Ktest.20111111.csv.gz | tail -3
+"299998","entity200KTest.20111111","Ent_299998","attr0_922601","attr1_176458"
+"299999","entity200KTest.20111111","Ent_299999","attr0_588278","attr1_253595"
+"300000","entity200KTest.20111111","Ent_300000","attr0_295461","attr1_36491"
+
+
+
+$ zcat DONTBACKUP/200Ktest.20010101.csv.gz | grep ^\"111111
+"111111","entity200KTest.20010101","Ent_111111","attr0_703808","attr1_665025"
+
+$ zcat DONTBACKUP/200Ktest.20111111.csv.gz | grep ^\"111111
+"111111","entity200KTest.20111111","Ent_111111","attr0_632068","attr1_273703"
+
+
+
+$
+
+$ time ./prep.sh                            \
+>       DONTBACKUP/200Ktest.20010101.csv.gz \
+>       DONTBACKUP/200Ktest.20111111.csv.gz \
+>       > DONTBACKUP/200Ktest.diff.gz
+
+real    0m1.385s
+user    0m1.337s
+sys     0m0.243s
+
+
+
+$ zcat DONTBACKUP/200Ktest.diff.gz  | wc -l
+400004
+
+
+
+$ echo ID,LABEL,ENTITYNAME,ATTR0,ATTR1 > DONTBACKUP/200Ktest.header.csv
+
+
+
+$ time ./postJSON.py                  \
 >       200Ktest                        \
 >       DONTBACKUP/200Ktest.diff.gz     \
 >       DONTBACKUP/200Ktest.header.csv  \
 >       | gzip > DONTBACKUP/200Ktest.json.gz
 
-real    0m10.496s
-user    0m14.820s
-sys     0m0.358s
+real    0m7.533s
+user    0m11.902s
+sys     0m0.357s
 
-$
 
-$
+
+$ time ./postSQL.py                  \
+>       200Ktest                        \
+>       DONTBACKUP/200Ktest.diff.gz     \
+>       DONTBACKUP/200Ktest.header.csv  \
+>       | gzip > DONTBACKUP/200Ktest.sql.gz
+
+real    0m3.638s
+user    0m4.601s
+sys     0m0.217s
+
 
 $ zcat DONTBACKUP/200Ktest.json.gz | wc -l
 650011
@@ -87,5 +169,31 @@ me": "Ent_111111"},{"attr0": "attr0_16702374"},{"attr1": "attr1_5453705"}]   ,"n
 ,"entityname": "Ent_111111","attr0": "attr0_16702374","attr1": "attr1_5453705"}   ,"updateJsonNewVals":{"label":"entity200KTest.20111111","attr0"
 :"attr0_16702374","attr1":"attr1_5453705"}   ,"updateJsonOldNewVals": [{"label": {"is": "entity200KTest.20111111", "was": "entity200KTest.2001010
 1" }},{"attr0": {"is": "attr0_16702374", "was": "attr0_88029865" }},{"attr1": {"is": "attr1_5453705", "was": "attr1_3997504" }}]
+
+
+
+$ zcat DONTBACKUP/200Ktest.cy.gz
+[cut]
+-- OLD VALUES= "111111","entity200KTest.20010101","Ent_111111","attr0_88029865","attr1_3997504"
+-- NEW VALUES= "111111","entity200KTest.20111111","Ent_111111","attr0_16702374","attr1_5453705"
+MATCH (x:200Ktest {id: '"111111"'} )
+ SET
+   LABEL: 'entity200KTest.20111111',
+   ATTR0: 'attr0_16702374',
+   ATTR1: 'attr1_5453705',
+ WHERE ID="111111";
+[cut]
+
+
+$ zcat DONTBACKUP/200Ktest.sql.gz
+[cut]
+-- OLD VALUES= "111111","entity200KTest.20010101","Ent_111111","attr0_88029865","attr1_3997504"
+-- NEW VALUES= "111111","entity200KTest.20111111","Ent_111111","attr0_16702374","attr1_5453705"
+UPDATE 200Ktest SET
+ label = "entity200KTest.20111111", attr0 = "attr0_16702374", attr1 = "attr1_5453705"
+ WHERE ID="111111";
+[cut]
+
+
 
 $
