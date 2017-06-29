@@ -1,4 +1,5 @@
 # CSV Change detection system: a K.I.S.S. approach
+## *or: How I Learned to Stop Worrying and Love the Deltas*
 
 The objective is to provide a simple and fast delta provider: the final objective is to show difference between different version of date, being them in different time (changes between yesterday and today) or between different machines.
 
