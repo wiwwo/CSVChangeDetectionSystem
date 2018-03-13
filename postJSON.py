@@ -15,6 +15,8 @@ writeEvery=5
 rowHeader="\n   "
 #rowHeader="   "
 
+dataFieldSeparator=','
+
 
 ################################################################################
 ### READING PART ###############################################################
@@ -37,7 +39,7 @@ for thisLine in fileIn:
 
   thisLine=thisLine.rstrip('\n')
 
-  thisId=thisLine.split(',')[0]
+  thisId=thisLine.split(dataFieldSeparator)[0]
 
   # New Id, default action
   if not localStoreId.has_key(thisId):
@@ -94,7 +96,7 @@ for thisKey, thisValue in localStoreVals.items():
   # Old Values Part
   if thisAction[thisKey] == 'D' or thisAction[thisKey] == 'U':
 
-    oldValues=list(localStoreOldVals[thisKey].replace('"','').split(','))
+    oldValues=list(localStoreOldVals[thisKey].replace('"','').split(dataFieldSeparator))
 
     writeStr = writeStr + rowHeader + ",\"oldValuesCsv\":["+localStoreOldVals[thisKey]+"]"
 
@@ -114,7 +116,7 @@ for thisKey, thisValue in localStoreVals.items():
   # New Values here
   if thisAction[thisKey] == 'I' or thisAction[thisKey] == 'U':
 
-    newValues=list(thisValue.replace('"','').split(','))
+    newValues=list(thisValue.replace('"','').split(dataFieldSeparator))
 
     writeStr = writeStr + rowHeader + ",\"newValuesCsv\": ["+localStoreVals[thisKey]+"]"
 

@@ -15,6 +15,8 @@ writeEvery=5
 rowHeader="\n   "
 #rowHeader="   "
 
+dataFieldSeparator=','
+
 
 ################################################################################
 ### READING PART ###############################################################
@@ -37,7 +39,7 @@ for thisLine in fileIn:
 
   thisLine=thisLine.rstrip('\n')
 
-  thisId=thisLine.split(',')[0]
+  thisId=thisLine.split(dataFieldSeparator)[0]
 
   # New Id, default action
   if not localStoreId.has_key(thisId):
@@ -98,7 +100,7 @@ for thisKey, thisValue in localStoreVals.items():
     print "CREATE (x:"+tableName
     print "{ "
 
-    newValues=list(thisValue.replace('"','').split(','))
+    newValues=list(thisValue.replace('"','').split(dataFieldSeparator))
     insStr=""
     for fieldIdx in range(0,len(headerList)):
       insStr=insStr+ " "+ headerList[fieldIdx]+": '"+newValues[fieldIdx]+"',\n"
@@ -108,8 +110,8 @@ for thisKey, thisValue in localStoreVals.items():
 
   # Now the funny part...
   if thisAction[thisKey] == 'U':
-    oldValues=list(localStoreOldVals[thisKey].replace('"','').split(','))
-    newValues=list(thisValue.replace('"','').split(','))
+    oldValues=list(localStoreOldVals[thisKey].replace('"','').split(dataFieldSeparator))
+    newValues=list(thisValue.replace('"','').split(dataFieldSeparator))
 
     print "-- OLD VALUES= "+localStoreOldVals[thisKey]
     print "-- NEW VALUES= "+thisValue
