@@ -37,6 +37,10 @@ for thisLine in fileIn:
   if thisLine[0] == '-' or thisLine[0]=='+':
     continue
 
+  # Get rid of non ID lines
+  if not thisLine[1].isdigit():
+    continue
+
   thisLine=thisLine.rstrip('\n')
 
   thisId=thisLine.split(dataFieldSeparator)[0]
@@ -93,7 +97,12 @@ for thisKey, thisValue in localStoreVals.items():
     print "DEL ID "+thisKey+";\t -- OLD VALUES="+localStoreOldVals[thisKey]
 
   if thisAction[thisKey] == 'I':
-    print "INS ID "+thisKey+";\t -- NEW VALUES="+thisValue
+    #print "INS ID "+thisKey+";\t -- NEW VALUES="+thisValue
+    newValues=list(thisValue.replace('"','').split(dataFieldSeparator))
+    print "INS ID "+thisKey+";\t",
+    for fieldIdx in range(0,len(headerList)):
+      print headerList[fieldIdx]+"="+newValues[fieldIdx]+'\t',
+    print
 
   # Now the funny part...
   if thisAction[thisKey] == 'U':
