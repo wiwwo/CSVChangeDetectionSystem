@@ -37,7 +37,7 @@ for thisLine in fileIn:
   if thisLine[0] == '-' or thisLine[0]=='+':
     continue
 
-  # Get rid of non ID lines
+  # Get rid of non-ID lines
   if not thisLine[1].isdigit():
     continue
 
