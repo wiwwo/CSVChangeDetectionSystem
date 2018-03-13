@@ -104,5 +104,5 @@ for thisKey, thisValue in localStoreVals.items():
     print "UPD ID "+thisKey+";\t",
     for fieldIdx in range(0,len(headerList)):
       if newValues[fieldIdx] != oldValues[fieldIdx]:
-        print " -- OLD VALUE="+oldValues[fieldIdx]+" -- NEW VALUE="+newValues[fieldIdx]+"\t",
+        print headerList[fieldIdx]+" HAS CHANGED -- OLD VALUE="+oldValues[fieldIdx]+" -- NEW VALUE="+newValues[fieldIdx]+"\t",
     print
