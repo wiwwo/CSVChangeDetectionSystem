@@ -106,8 +106,8 @@ for thisKey, thisValue in localStoreVals.items():
 
   # Now the funny part...
   if thisAction[thisKey] == 'U':
-    oldValues=list(localStoreOldVals[thisKey].replace('"','').split(dataFieldSeparator))
-    newValues=list(thisValue.replace('"','').split(dataFieldSeparator))
+    newValues=list(localStoreOldVals[thisKey].replace('"','').split(dataFieldSeparator))
+    oldValues=list(thisValue.replace('"','').split(dataFieldSeparator))
 
     #print "UPD ID "+thisKey+";\t -- NEW VALUES="+thisValue+"\t -- OLD VALUES="+localStoreOldVals[thisKey]
     print "UPD ID "+thisKey+";\t",
