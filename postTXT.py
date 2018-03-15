@@ -37,8 +37,9 @@ for thisLine in fileIn:
   if thisLine[0] == '-' or thisLine[0]=='+':
     continue
 
-  # Get rid of non-ID lines
+  # Get rid of non ID lines
   if not thisLine[1].isdigit():
+    #print 'SKIP'+thisLine[1]
     continue
 
   thisLine=thisLine.rstrip('\n')
@@ -54,18 +55,19 @@ for thisLine in fileIn:
     if thisSign == '+':
       thisAction[thisId]='I'
 
+
   # If i already have this id, it is an updated
   else:
 
     thisAction[thisId]='U'
 
-
   # If minus sign, i save old values
   if thisSign == '-':
-      localStoreOldVals[thisId]=thisLine
+    localStoreOldVals[thisId]=thisLine
 
   localStoreId[thisId]=thisId
   localStoreVals[thisId]=thisLine
+
 
 
 fileIn.close()
@@ -106,8 +108,8 @@ for thisKey, thisValue in localStoreVals.items():
 
   # Now the funny part...
   if thisAction[thisKey] == 'U':
-    newValues=list(localStoreOldVals[thisKey].replace('"','').split(dataFieldSeparator))
-    oldValues=list(thisValue.replace('"','').split(dataFieldSeparator))
+    oldValues=list(localStoreOldVals[thisKey].replace('"','').split(dataFieldSeparator))
+    newValues=list(thisValue.replace('"','').split(dataFieldSeparator))
 
     #print "UPD ID "+thisKey+";\t -- NEW VALUES="+thisValue+"\t -- OLD VALUES="+localStoreOldVals[thisKey]
     print "UPD ID "+thisKey+";\t",
