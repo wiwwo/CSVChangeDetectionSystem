@@ -5,6 +5,7 @@ import hashlib
 import datetime
 
 dataFieldSeparator='\t'
+headerSeparator=','
 
 tableName =sys.argv[1]
 oldFileName =sys.argv[2]
@@ -77,7 +78,7 @@ fileIn.close()
 headerFile = open(headerFileName, 'r')
 headerString=headerFile.readline().rstrip('\n')
 headerFile.close()
-headerList=headerString.split(',')
+headerList=headerString.split(headerSeparator)
 headerLen=len(headerList)
 
 for thisKey,thisAction in eventAction.items():

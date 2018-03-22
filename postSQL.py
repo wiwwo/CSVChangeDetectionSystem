@@ -16,6 +16,7 @@ rowHeader="\n   "
 #rowHeader="   "
 
 dataFieldSeparator=','
+headerSeparator=','
 
 
 ################################################################################
@@ -74,7 +75,7 @@ fileIn.close()
 headerFile = open(headerFileName, 'r')
 headerString=headerFile.readline().rstrip('\n')
 headerFile.close()
-headerList=headerString.split(',')
+headerList=headerString.split(headerSeparator)
 headerLen=len(headerList)
 
 
