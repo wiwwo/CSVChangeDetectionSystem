@@ -95,6 +95,7 @@ for thisLine in fileIn:
     oldContentData[thisId]=zlib.compress( thisLine.rstrip('\n') )
 
 
+del oldContentHash
 fileIn.close()
 
 #print eventAction
