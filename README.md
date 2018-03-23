@@ -29,12 +29,12 @@ Starting from those basic assumptions, generating deltas is pretty straight forw
 <br>
 I show here my quick and dirty solution, which should be good enough for a P.O.C.<br>
 Many files attached, let’s start from the beginning:<br>
-•	```prep.sh``` is used to do the real magic: calls the diff –u command, filters out lines without sign, and compresses output.<br>
+•	```oneLineDiff.sh``` is used to do the real magic: calls the diff –u command, filters out lines without sign, and compresses output.<br>
     No magic, no 200 lines code with 20 pages manual (those numbers swap if code is in python :-P), no custom code, 99.9999999999% bugs free,  one line solution, runs everywhere with no change, works out-of-the-box, no external dependencies, no compiler/interpreter, …<br>
     Maybe the K.I.S.S.-est solution I’ve ever found :-)<br>
-•	```postJSON.py``` takes the prep.sh output and elaborates it, producing a JSON row for every difference in file.<br>
+•	```deltasJSON.py``` takes the oneLineDiff.sh output and elaborates it, producing a JSON row for every difference in file.<br>
     Please note this is just a P.O.C., there are many ways of writing this code better! :-)<br>
-•	```postSQL.py``` is the very same, but produces a SQL file. Same terms & conditions apply :-)<br>
+•	```deltasSQL.py``` is the very same, but produces a SQL file. Same terms & conditions apply :-)<br>
 •	```randomData.entities.py``` creates CSVs with random data.<br>
 <br>
 <br>
@@ -72,7 +72,7 @@ zcat DONTBACKUP/200Ktest.20010101.csv.gz | grep ^\"111111
 zcat DONTBACKUP/200Ktest.20111111.csv.gz | grep ^\"111111
 
 
-time ./prep.sh                            \
+time ./oneLineDiff.sh                     \
       DONTBACKUP/200Ktest.20010101.csv.gz \
       DONTBACKUP/200Ktest.20111111.csv.gz \
       > DONTBACKUP/200Ktest.diff.gz
@@ -81,19 +81,19 @@ zcat DONTBACKUP/200Ktest.diff.gz  | wc -l
 
 echo ID,LABEL,ENTITYNAME,ATTR0,ATTR1 > DONTBACKUP/200Ktest.header.csv
 
-time ./postJSON.py                  \
+time ./deltasJSON.py                  \
       200Ktest                        \
       DONTBACKUP/200Ktest.diff.gz     \
       DONTBACKUP/200Ktest.header.csv  \
       | gzip > DONTBACKUP/200Ktest.json.gz
 
-time ./postSQL.py                  \
+time ./deltasSQL.py                   \
       200Ktest                        \
       DONTBACKUP/200Ktest.diff.gz     \
       DONTBACKUP/200Ktest.header.csv  \
       | gzip > DONTBACKUP/200Ktest.sql.gz
 
-time ./postpostCYPHER.py                  \
+time ./deltasCYPHER.py                \
       200Ktest                        \
       DONTBACKUP/200Ktest.diff.gz     \
       DONTBACKUP/200Ktest.header.csv  \
@@ -164,7 +164,7 @@ $ zcat DONTBACKUP/200Ktest.20111111.csv.gz | grep ^\"111111
 
 $
 
-$ time ./prep.sh                            \
+$ time ./oneLineDiff.sh                     \
 >       DONTBACKUP/200Ktest.20010101.csv.gz \
 >       DONTBACKUP/200Ktest.20111111.csv.gz \
 >       > DONTBACKUP/200Ktest.diff.gz
@@ -184,7 +184,7 @@ $ echo ID,LABEL,ENTITYNAME,ATTR0,ATTR1 > DONTBACKUP/200Ktest.header.csv
 
 
 
-$ time ./postJSON.py                  \
+$ time ./deltasJSON.py                  \
 >       200Ktest                        \
 >       DONTBACKUP/200Ktest.diff.gz     \
 >       DONTBACKUP/200Ktest.header.csv  \
@@ -196,7 +196,7 @@ sys     0m0.357s
 
 
 
-$ time ./postSQL.py                  \
+$ time ./deltasSQL.py                   \
 >       200Ktest                        \
 >       DONTBACKUP/200Ktest.diff.gz     \
 >       DONTBACKUP/200Ktest.header.csv  \
@@ -209,7 +209,7 @@ sys     0m0.217s
 
 
 
-$ time ./postCYPHER.py                  \
+$ time ./deltasCYPHER.py                \
 >       200Ktest                        \
 >       DONTBACKUP/200Ktest.diff.gz     \
 >       DONTBACKUP/200Ktest.header.csv  \
